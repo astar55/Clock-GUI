@@ -6,12 +6,19 @@ import static TimeWidget.Alarm.AlarmView.getAlarms;
 
 public class Alarm extends TimeWidget {
 
-    public Alarm(int id, String name) {
-        super(id, name);
+
+    public Alarm(String name) {
+        this.name = name;
+        createWidget();
+    }
+
+    @Override
+    protected void createWidgetBottom() {
+
     }
 
     @Override
     protected void closeEvent() {
-        getAlarms().remove(getId());
+        getAlarms().remove(getWidget());
     }
 }

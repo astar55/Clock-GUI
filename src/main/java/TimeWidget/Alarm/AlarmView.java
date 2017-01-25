@@ -4,17 +4,16 @@ import TimeWidget.Container.TimeWidgetView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
 
 import java.util.List;
 
 public class AlarmView extends TimeWidgetView{
-    private static ObservableList<HBox> alarms;
-    private static int count = 0;
+    private static ObservableList<GridPane> alarms;
 
     public ListView create() {
         alarms = FXCollections.observableArrayList();
-        ListView<HBox> alarmListView = new ListView<>(alarms);
+        ListView<GridPane> alarmListView = new ListView<>(alarms);
         /* clear selection
         alarmListView.setOnMouseClicked((event -> {
             alarmListView.getSelectionModel().clearSelection();
@@ -25,12 +24,11 @@ public class AlarmView extends TimeWidgetView{
     }
 
     public void createWidget(String name) {
-        Alarm alarm = new Alarm(count, name);
+        Alarm alarm = new Alarm(name);
         alarms.add(alarm.getWidget());
-        count++;
     }
 
-    public static List<HBox> getAlarms() {
+    public static List<GridPane> getAlarms() {
         return alarms;
     }
 }

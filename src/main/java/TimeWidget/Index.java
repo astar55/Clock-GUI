@@ -1,6 +1,7 @@
 package TimeWidget;
 
 import TimeWidget.Alarm.AlarmView;
+import TimeWidget.Timer.TimerView;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Bounds;
@@ -43,17 +44,17 @@ public class Index extends Application {
 
 
         ContextMenu createmenu = new ContextMenu();
-        MenuItem alarmitm = new MenuItem("TimeWidget/Alarm");
+        MenuItem alarmitm = new MenuItem("Alarm");
         alarmitm.addEventHandler(ActionEvent.ACTION, (event -> {
-            System.out.println("TimeWidget.Alarm Pressed");
+            System.out.println("Alarm Pressed");
         }));
-        MenuItem timeritm = new MenuItem("TimeWidget/Timer");
+        MenuItem timeritm = new MenuItem("Timer");
         timeritm.addEventHandler(ActionEvent.ACTION, (event -> {
-            System.out.println("TimeWidget.Timer Pressed");
+            System.out.println("Timer Pressed");
         }));
         MenuItem stpwthitm = new MenuItem("StopWatch");
         stpwthitm.addEventHandler(ActionEvent.ACTION, (event -> {
-            System.out.println("TimeWidget.Stopwatch Pressed");
+            System.out.println("Stopwatch Pressed");
         }));
         createmenu.getItems().addAll(alarmitm, timeritm,stpwthitm);
 
@@ -68,17 +69,20 @@ public class Index extends Application {
 
         TabPane tabPane = new TabPane();
         tabPane.tabMinWidthProperty().bind(primaryStage.widthProperty().subtract(82).divide(3));
+        tabPane.minHeightProperty().bind(primaryStage.heightProperty().subtract(160));
 
 
-        Tab alarmTab = createTab("TimeWidget/Alarm");
+        Tab alarmTab = createTab("Alarm");
         AlarmView alarmView = new AlarmView();
         alarmTab.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/ic_alarm_white_24dp_1x.png"))));
         alarmTab.setContent(alarmView.create());
 
-        Tab timerTab = createTab("TimeWidget/Timer");
+        Tab timerTab = createTab("Timer");
+        TimerView timerView = new TimerView();
         timerTab.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/ic_timer_white_24dp_1x.png"))));
+        timerTab.setContent(timerView.create());
 
-        Tab stopwatchTab = createTab("TimeWidget/Stopwatch");
+        Tab stopwatchTab = createTab("Stopwatch");
         stopwatchTab.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/ic_watch_white_24dp_1x.png"))));
 
 
