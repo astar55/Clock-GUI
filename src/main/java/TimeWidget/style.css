@@ -1,0 +1,20 @@
+.title {
+    -fx-font-size: 16;
+    -fx-fill: darkcyan;
+}
+
+.tab {
+    -fx-background-color: lightseagreen;
+}
+
+.tab:selected {
+    -fx-background-color: lightskyblue;
+}
+
+.bg {
+    -fx-background: aqua;
+}
+
+.context-menu {
+    -fx-background-color: lavender;
+}
