@@ -16,13 +16,6 @@ public class TimerView extends TimeWidgetView {
     public ListView create() {
         timers = FXCollections.observableArrayList();
         ListView<GridPane> timerListView = new ListView<>(timers);
-        createWidget("Hoo", Duration.ofSeconds(61));
-        createWidget("Hoo", Duration.ofSeconds(71));
-        createWidget("Boo", Duration.ofSeconds(59));
-        createWidget("", Duration.ofSeconds(9));
-        createWidget("a", Duration.ofMinutes(65));
-        createWidget("a", Duration.ofMinutes(85));
-        createWidget("a", Duration.ofMinutes(65));
         return timerListView;
     }
 

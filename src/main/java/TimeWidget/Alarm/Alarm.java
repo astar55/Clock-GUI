@@ -2,6 +2,8 @@ package TimeWidget.Alarm;
 
 import TimeWidget.Container.TimeWidget;
 
+import java.util.concurrent.ScheduledFuture;
+
 import static TimeWidget.Alarm.AlarmView.getAlarms;
 
 public class Alarm extends TimeWidget {
@@ -14,6 +16,26 @@ public class Alarm extends TimeWidget {
 
     @Override
     protected void createWidgetBottom() {
+
+    }
+
+    @Override
+    protected void executeExecutor() {
+
+    }
+
+    @Override
+    protected ScheduledFuture<?> createFutureTask() {
+        return null;
+    }
+
+    @Override
+    protected void cancelExecutor() {
+
+    }
+
+    @Override
+    protected void updateGUI() {
 
     }
 

@@ -1,5 +1,6 @@
 package TimeWidget.Container;
 
+import javafx.concurrent.ScheduledService;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -8,13 +9,19 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
 import java.time.Duration;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 
 public abstract class TimeWidget {
     protected GridPane widget;
     protected String name;
+    protected Text timetxt;
     protected boolean started = true;
     protected boolean paused = false;
+    protected ScheduledThreadPoolExecutor executor;
+    protected ScheduledFuture<?> futureTask;
+
 
     protected void createWidget() {
         widget = CreateFunctions.createColumnConstraintedGridPane(25);
@@ -33,12 +40,14 @@ public abstract class TimeWidget {
         widget.add(borderPane, 3, 0);
 
         createWidgetBottom();
-
+        executeExecutor();
     }
 
     abstract protected void createWidgetBottom();
 
-    protected void createTimeButton() {
+    abstract protected void executeExecutor();
+
+    protected void createTimeButtons() {
         Button startbtn = new Button("Start");
         Button resumebtn = new Button("Resume");
         Button pausebtn = new Button("Pause");
@@ -47,16 +56,19 @@ public abstract class TimeWidget {
             this.paused = false;
             widget.getChildren().remove(startbtn);
             widget.add(pausebtn, 0, 2);
+            futureTask = createFutureTask();
         }));
         resumebtn.addEventHandler(ActionEvent.ACTION, (event -> {
             this.paused = false;
             widget.getChildren().remove(resumebtn);
             widget.add(pausebtn, 0, 2);
+            futureTask = createFutureTask();
         }));
         pausebtn.addEventHandler(ActionEvent.ACTION, (event -> {
             this.paused = true;
             widget.getChildren().remove(pausebtn);
             widget.add(resumebtn, 0, 2);
+            cancelExecutor();
         }));
         widget.add(pausebtn, 0, 2);
 
@@ -72,11 +84,19 @@ public abstract class TimeWidget {
                     widget.getChildren().remove(pausebtn);
                 }
                 widget.add(startbtn, 0, 2);
+                resetTime();
             }
+            cancelExecutor();
         });
         borderPane.setRight(resetbtn);
         widget.add(borderPane, 3,2);
     }
+
+    protected void resetTime() {}
+
+    protected abstract ScheduledFuture<?> createFutureTask();
+
+    protected abstract void cancelExecutor();
 
     protected String timeFormat(Duration time){
         String timetxt;
@@ -98,6 +118,7 @@ public abstract class TimeWidget {
         return timetxt;
     }
 
+    protected abstract void updateGUI();
 
     protected abstract void closeEvent();
 
@@ -109,5 +130,14 @@ public abstract class TimeWidget {
         return this.name;
     }
 
+    public ScheduledThreadPoolExecutor getExecutor() { return this.executor; }
+
+    public Text getTimetxt() { return this.timetxt; }
+
+    public void setTimetxt(String text) {
+        getTimetxt().textProperty().setValue(text);
+    }
+
+    public ScheduledFuture<?> getFutureTask() { return this.futureTask; }
 }
 
