@@ -9,18 +9,20 @@ import javafx.scene.layout.GridPane;
 import java.util.List;
 
 public class AlarmView extends TimeWidgetView{
-    private static ObservableList<GridPane> alarms;
+    private static ObservableList<GridPane> alarms = FXCollections.observableArrayList();
 
-    public ListView create() {
-        alarms = FXCollections.observableArrayList();
-        ListView<GridPane> alarmListView = new ListView<>(alarms);
+    public AlarmView() {
+        create();
+    }
+
+    public void create() {
+        listView = new ListView<>(alarms);
         /* clear selection
         alarmListView.setOnMouseClicked((event -> {
             alarmListView.getSelectionModel().clearSelection();
         }));
         */
         createWidget("boo");
-        return alarmListView;
     }
 
     public void createWidget(String name) {
@@ -31,4 +33,5 @@ public class AlarmView extends TimeWidgetView{
     public static List<GridPane> getAlarms() {
         return alarms;
     }
+
 }

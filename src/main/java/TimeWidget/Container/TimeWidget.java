@@ -1,11 +1,11 @@
 package TimeWidget.Container;
 
-import javafx.concurrent.ScheduledService;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 import java.time.Duration;
@@ -17,6 +17,7 @@ public abstract class TimeWidget {
     protected GridPane widget;
     protected String name;
     protected Text timetxt;
+    protected String mediasrc;
     protected boolean started = true;
     protected boolean paused = false;
     protected ScheduledThreadPoolExecutor executor;

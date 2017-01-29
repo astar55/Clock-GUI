@@ -15,7 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import static TimeWidget.Container.CreateFunctions.*;
@@ -23,12 +22,15 @@ import static TimeWidget.Container.CreateFunctions.*;
 @SpringBootApplication
 public class Index extends Application {
 
+    public static Stage primaryStage;
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
+         setPrimaryStage(primaryStage);
 
         GridPane gridPane = createColumnConstraintedGridPane(25);
         gridPane.setGridLinesVisible(true);
@@ -75,12 +77,12 @@ public class Index extends Application {
         Tab alarmTab = createTab("Alarm");
         AlarmView alarmView = new AlarmView();
         alarmTab.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/ic_alarm_white_24dp_1x.png"))));
-        alarmTab.setContent(alarmView.create());
+        alarmTab.setContent(alarmView.getListView());
 
         Tab timerTab = createTab("Timer");
         TimerView timerView = new TimerView();
         timerTab.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/ic_timer_white_24dp_1x.png"))));
-        timerTab.setContent(timerView.create());
+        timerTab.setContent(timerView.getListView());
 
         Tab stopwatchTab = createTab("Stopwatch");
         stopwatchTab.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/ic_watch_white_24dp_1x.png"))));
@@ -135,7 +137,12 @@ public class Index extends Application {
         primaryStage.setScene(indexScene);
         //primaryStage.setMaximized(true);
         primaryStage.show();
+    }
 
+    public static Stage getPrimaryStage() { return primaryStage; }
+
+    public static void setPrimaryStage(Stage stage) {
+        primaryStage = stage;
     }
 
 }

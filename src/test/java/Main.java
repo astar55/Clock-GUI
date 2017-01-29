@@ -1,9 +1,6 @@
 import TimeWidget.Index;
-
 import javafx.application.Application;
 import org.junit.Test;
-
-import java.time.Duration;
 
 public class Main {
 
@@ -27,5 +24,20 @@ public class Main {
             }
         });
         app.run();
+    }
+
+    @Test
+    public void timerNotifyTest() {
+        Thread app = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Application.launch(TimerNotifyTest.class);
+            }
+        });
+        app.run();
+    }
+
+    @Test
+    public void test() {
     }
 }

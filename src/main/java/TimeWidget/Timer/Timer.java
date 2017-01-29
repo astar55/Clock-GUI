@@ -2,8 +2,6 @@ package TimeWidget.Timer;
 
 import TimeWidget.Container.TimeWidget;
 import javafx.application.Platform;
-import javafx.concurrent.ScheduledService;
-import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -13,16 +11,17 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-
-import static TimeWidget.Timer.TimerView.getTimers;
+import static TimeWidget.Index.getPrimaryStage;
 
 public class Timer extends TimeWidget {
 
+    private TimerView timerView;
     private final Duration totaltime;
     private Duration remaing;
 
 
-    public Timer(String name, Duration time) {
+    public Timer(TimerView timerView, String name, Duration time) {
+        this.timerView = timerView;
         this.name = name;
         this.totaltime = time;
         this.remaing = time;
@@ -35,12 +34,10 @@ public class Timer extends TimeWidget {
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER);
 
-        System.out.println(this.totaltime + " " + this.remaing + " " + getRemaingTime()+ " " + timeFormat(getRemaingTime()));
 
         timetxt = new Text(timeFormat(getRemaingTime()));
         hBox.getChildren().add(timetxt);
         widget.add(hBox, 0,1,4,1);
-        System.out.println(this.totaltime + " " + this.remaing + " " + getRemaingTime()+ " " + timeFormat(getRemaingTime()));
 
         createTimeButtons();
 
@@ -71,6 +68,12 @@ public class Timer extends TimeWidget {
         }
         else {
             cancelExecutor();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    new TimerNotify(getPrimaryStage(), name, timeFormat(totaltime), mediasrc);
+                }
+            });
         }
     }
 
@@ -101,7 +104,7 @@ public class Timer extends TimeWidget {
     protected void closeEvent() {
         cancelExecutor();
         getExecutor().shutdown();
-        getTimers().remove(getWidget());
+        timerView.getTimers().remove(getWidget());
     }
 
     public Duration getTotalTime() { return this.totaltime; }

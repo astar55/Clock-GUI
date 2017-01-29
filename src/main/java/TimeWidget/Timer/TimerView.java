@@ -10,19 +10,23 @@ import java.time.Duration;
 import java.util.List;
 
 public class TimerView extends TimeWidgetView {
-    private static ObservableList<GridPane> timers;
+    private static ObservableList<GridPane> timers = FXCollections.observableArrayList();
+
+    public TimerView() {
+        create();
+        createWidget("", Duration.ofSeconds(1));
+    }
 
     @Override
-    public ListView create() {
-        timers = FXCollections.observableArrayList();
-        ListView<GridPane> timerListView = new ListView<>(timers);
-        return timerListView;
+    public void  create() {
+        listView = new ListView<>(timers);
     }
 
     public void createWidget(String name, Duration time) {
-        Timer timer = new Timer(name, time);
+        Timer timer = new Timer(this, name, time);
         timers.add(timer.getWidget());
     }
 
-    public static List<GridPane> getTimers() { return timers;}
+    public List<GridPane> getTimers() { return timers;}
+
 }
