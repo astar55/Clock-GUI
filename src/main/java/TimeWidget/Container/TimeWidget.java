@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.time.Duration;
 import java.util.concurrent.ScheduledFuture;
@@ -22,6 +23,7 @@ public abstract class TimeWidget {
     protected boolean paused = false;
     protected ScheduledThreadPoolExecutor executor;
     protected ScheduledFuture<?> futureTask;
+    protected Stage owner;
 
 
     protected void createWidget() {
@@ -42,6 +44,8 @@ public abstract class TimeWidget {
 
         createWidgetBottom();
         executeExecutor();
+
+
     }
 
     abstract protected void createWidgetBottom();

@@ -11,6 +11,7 @@ public class TimerNotify extends TimeWidgetNotify{
 
     public TimerNotify(Stage owner, String name, String time, String mediasrc) {
         super(owner, name, time, mediasrc);
+
     }
 
     @Override

@@ -1,11 +1,14 @@
 package TimeWidget.Container;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 public class CreateFunctions {
 
@@ -43,4 +46,11 @@ public class CreateFunctions {
         return gridPane;
     }
 
+    public static HBox createAlignedLabel(String text, Pos position) {
+        HBox hBox = new HBox();
+        Label label = new Label(text);
+        hBox.setAlignment(position);
+        hBox.getChildren().add(label);
+        return hBox;
+    }
 }

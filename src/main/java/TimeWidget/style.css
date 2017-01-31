@@ -18,3 +18,12 @@
 .context-menu {
     -fx-background-color: lavender;
 }
+
+.righttxt {
+    -fx-text-alignment: right;
+    -fx-fill: aqua;
+}
+
+.centertxt {
+    -fx-text-alignment: center;
+}

@@ -1,6 +1,8 @@
 package TimeWidget;
 
 import TimeWidget.Alarm.AlarmView;
+import TimeWidget.Stopwatch.StopwatchView;
+import TimeWidget.Timer.TimerCreate;
 import TimeWidget.Timer.TimerView;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -17,12 +19,19 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+
 import static TimeWidget.Container.CreateFunctions.*;
 
 @SpringBootApplication
 public class Index extends Application {
 
-    public static Stage primaryStage;
+    static ArrayList<ExecutorService> executors = new ArrayList<>();
+    AlarmView alarmView;
+    TimerView timerView;
+    StopwatchView stopwatchView;
 
     public static void main(String[] args) {
         launch(args);
@@ -30,7 +39,6 @@ public class Index extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-         setPrimaryStage(primaryStage);
 
         GridPane gridPane = createColumnConstraintedGridPane(25);
         gridPane.setGridLinesVisible(true);
@@ -52,7 +60,7 @@ public class Index extends Application {
         }));
         MenuItem timeritm = new MenuItem("Timer");
         timeritm.addEventHandler(ActionEvent.ACTION, (event -> {
-            System.out.println("Timer Pressed");
+            new TimerCreate(primaryStage, timerView);
         }));
         MenuItem stpwthitm = new MenuItem("StopWatch");
         stpwthitm.addEventHandler(ActionEvent.ACTION, (event -> {
@@ -71,16 +79,16 @@ public class Index extends Application {
 
         TabPane tabPane = new TabPane();
         tabPane.tabMinWidthProperty().bind(primaryStage.widthProperty().subtract(82).divide(3));
-        tabPane.minHeightProperty().bind(primaryStage.heightProperty().subtract(160));
+        tabPane.minHeightProperty().bind(primaryStage.heightProperty().subtract(130));
 
 
         Tab alarmTab = createTab("Alarm");
-        AlarmView alarmView = new AlarmView();
+        alarmView = new AlarmView();
         alarmTab.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/ic_alarm_white_24dp_1x.png"))));
         alarmTab.setContent(alarmView.getListView());
 
         Tab timerTab = createTab("Timer");
-        TimerView timerView = new TimerView();
+        timerView = new TimerView();
         timerTab.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/ic_timer_white_24dp_1x.png"))));
         timerTab.setContent(timerView.getListView());
 
@@ -92,40 +100,6 @@ public class Index extends Application {
         tabPane.getTabs().addAll(alarmTab, timerTab, stopwatchTab);
         gridPane.add(tabPane, 0, 3, 4,1);
 
-        Button open = new Button("Open");
-        open.addEventHandler(ActionEvent.ACTION, (event -> {
-            Stage temp = new Stage();
-            HBox a = new HBox();
-            a.setAlignment(Pos.CENTER);
-
-            Text boo = new Text("Boo");
-            a.getChildren().add(boo);
-
-            temp.setTitle("hal");
-            temp.initOwner(primaryStage);
-            temp.initModality(Modality.APPLICATION_MODAL);
-            temp.setScene(new Scene(a, 500, 500));
-            temp.showAndWait();
-
-        }));
-        gridPane.add(open, 1, 2);
-
-        Button v = new Button("Open");
-        v.addEventHandler(ActionEvent.ACTION, (event -> {
-            Stage temp = new Stage();
-            HBox a = new HBox();
-            a.setAlignment(Pos.CENTER);
-
-            Text boo = new Text("Boo");
-            a.getChildren().add(boo);
-
-            temp.setTitle("hal");
-            temp.initOwner(primaryStage);
-            temp.setScene(new Scene(a, 500, 500));
-            temp.showAndWait();
-
-        }));
-        gridPane.add(v, 2, 2);
 
 
         ScrollPane scrollPane = createScrollPane(gridPane);
@@ -139,10 +113,24 @@ public class Index extends Application {
         primaryStage.show();
     }
 
-    public static Stage getPrimaryStage() { return primaryStage; }
-
-    public static void setPrimaryStage(Stage stage) {
-        primaryStage = stage;
+    @Override
+    public void stop() {
+        for(ExecutorService executor : executors) {
+            executor.shutdown();
+        }
     }
+
+    public static ArrayList<ExecutorService> getExecutorsList() {
+        return executors;
+    }
+
+    public static void addExecutors(ExecutorService e){
+        executors.add(e);
+    }
+
+    public static void removeExecutors(ExecutorService e) {
+        executors.remove(e);
+    }
+
 
 }

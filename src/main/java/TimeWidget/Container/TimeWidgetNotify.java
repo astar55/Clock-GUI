@@ -1,5 +1,7 @@
 package TimeWidget.Container;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -56,7 +58,7 @@ public abstract class TimeWidgetNotify {
         try {
             this.media = new Media(mediasrc);
         }
-        catch(NullPointerException | MediaException e){
+        catch(NullPointerException | MediaException | IllegalArgumentException e){
             hasMedia = false;
         }
         timeline = new Timeline();
@@ -73,6 +75,14 @@ public abstract class TimeWidgetNotify {
 
         ImageView imageView = getImageView();
 
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setAutoReverse(true);
+        final KeyValue leftrotate = new KeyValue(imageView.rotateProperty(), -45);
+        final KeyValue rightrotate = new KeyValue(imageView.rotateProperty(), 45);
+        final KeyFrame leftkeyframe = new KeyFrame(Duration.millis(0), leftrotate);
+        final KeyFrame rightkeyframe = new KeyFrame(Duration.millis(1000), rightrotate);
+        timeline.getKeyFrames().addAll(leftkeyframe, rightkeyframe);
+        timeline.play();
 
         BorderPane borderPane = new BorderPane(imageView);
         gridPane.add(borderPane, 0, 1, 4, 2 );
@@ -259,7 +269,7 @@ public abstract class TimeWidgetNotify {
         if (hasMedia && (media.getSource().substring(media.getSource().lastIndexOf(".")+1).equals("mp4"))) {
             stage.setMaximized(true);
         }
-        stage.show();
+        stage.showAndWait();
     }
 
     public void updateTime() {

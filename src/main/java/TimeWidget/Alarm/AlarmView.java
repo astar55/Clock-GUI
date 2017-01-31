@@ -22,7 +22,6 @@ public class AlarmView extends TimeWidgetView{
             alarmListView.getSelectionModel().clearSelection();
         }));
         */
-        createWidget("boo");
     }
 
     public void createWidget(String name) {

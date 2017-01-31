@@ -5,13 +5,15 @@ import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.time.Duration;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import static TimeWidget.Index.getPrimaryStage;
+import static TimeWidget.Index.addExecutors;
+import static TimeWidget.Index.removeExecutors;
 
 public class Timer extends TimeWidget {
 
@@ -20,13 +22,14 @@ public class Timer extends TimeWidget {
     private Duration remaing;
 
 
-    public Timer(TimerView timerView, String name, Duration time) {
+    public Timer(TimerView timerView, Stage owner, String name, Duration time, String media) {
         this.timerView = timerView;
+        this.owner = owner;
         this.name = name;
         this.totaltime = time;
         this.remaing = time;
+        this.mediasrc = media;
         createWidget();
-
     }
 
     @Override
@@ -46,6 +49,7 @@ public class Timer extends TimeWidget {
     @Override
     protected void executeExecutor() {
         executor = new ScheduledThreadPoolExecutor(1);
+        addExecutors(executor);
         futureTask = createFutureTask();
 
     }
@@ -71,7 +75,7 @@ public class Timer extends TimeWidget {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    new TimerNotify(getPrimaryStage(), name, timeFormat(totaltime), mediasrc);
+                    new TimerNotify(owner, name, timeFormat(totaltime), mediasrc);
                 }
             });
         }
@@ -104,6 +108,7 @@ public class Timer extends TimeWidget {
     protected void closeEvent() {
         cancelExecutor();
         getExecutor().shutdown();
+        removeExecutors(executor);
         timerView.getTimers().remove(getWidget());
     }
 

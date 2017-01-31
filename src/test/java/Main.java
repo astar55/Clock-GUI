@@ -1,4 +1,9 @@
+import Stopwatch.StopwatchCreateTest;
+import Stopwatch.StopwatchTest;
 import TimeWidget.Index;
+import Timer.TimerCreateTest;
+import Timer.TimerNotifyTest;
+import Timer.TimerTest;
 import javafx.application.Application;
 import org.junit.Test;
 
@@ -36,6 +41,40 @@ public class Main {
         });
         app.run();
     }
+
+    @Test
+    public void timerCreateTest() {
+        Thread app = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Application.launch(TimerCreateTest.class);
+            }
+        });
+        app.run();
+    }
+
+    @Test
+    public void stopwatchTest() {
+        Thread app = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Application.launch(StopwatchTest.class);
+            }
+        });
+        app.run();
+    }
+
+    @Test
+    public void stopwatchCreateTest() {
+        Thread app = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Application.launch(StopwatchCreateTest.class);
+            }
+        });
+        app.run();
+    }
+
 
     @Test
     public void test() {

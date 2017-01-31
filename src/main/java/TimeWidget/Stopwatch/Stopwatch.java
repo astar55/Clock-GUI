@@ -1,12 +1,18 @@
 package TimeWidget.Stopwatch;
 
 import TimeWidget.Container.TimeWidget;
+import javafx.stage.Stage;
 
+import java.time.Duration;
 import java.util.concurrent.ScheduledFuture;
 
 public class Stopwatch extends TimeWidget{
+    private StopwatchView stopwatchView;
+    private Duration totaltime;
 
-    public Stopwatch(String name) {
+    public Stopwatch(StopwatchView stopwatchView, Stage owner, String name) {
+        this.stopwatchView = stopwatchView;
+        this.owner = owner;
         this.name = name;
         createWidget();
     }

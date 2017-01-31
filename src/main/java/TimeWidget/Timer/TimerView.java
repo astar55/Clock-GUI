@@ -2,9 +2,11 @@ package TimeWidget.Timer;
 
 import TimeWidget.Container.TimeWidgetView;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 import java.time.Duration;
 import java.util.List;
@@ -14,7 +16,6 @@ public class TimerView extends TimeWidgetView {
 
     public TimerView() {
         create();
-        createWidget("", Duration.ofSeconds(1));
     }
 
     @Override
@@ -22,9 +23,10 @@ public class TimerView extends TimeWidgetView {
         listView = new ListView<>(timers);
     }
 
-    public void createWidget(String name, Duration time) {
-        Timer timer = new Timer(this, name, time);
+    public void createWidget(Stage owner, String name, Duration time, String media) {
+        Timer timer = new Timer(this, owner, name, time, media);
         timers.add(timer.getWidget());
+
     }
 
     public List<GridPane> getTimers() { return timers;}
