@@ -10,11 +10,6 @@ import Timer.TimerTest;
 import javafx.application.Application;
 import org.junit.Test;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.chrono.ChronoLocalDate;
-
 public class Main {
 
     @Test

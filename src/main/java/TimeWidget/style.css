@@ -27,3 +27,8 @@
 .centertxt {
     -fx-text-alignment: center;
 }
+
+.notify {
+    -fx-font-size: 14;
+    -fx-fill: darkcyan;
+}

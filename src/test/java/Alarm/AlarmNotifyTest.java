@@ -12,6 +12,6 @@ public class AlarmNotifyTest extends Application{
     public void start(Stage primaryStage) throws Exception {
         FileChooser fileChooser = new FileChooser();
         File media = fileChooser.showOpenDialog(new Stage());
-        new AlarmNotify(primaryStage,"Morning", "08:00",media.toURI().toString(), 5000);
+        new AlarmNotify(primaryStage,"Morning", "08:00",media.toURI().toString(), 1000*60);
     }
 }

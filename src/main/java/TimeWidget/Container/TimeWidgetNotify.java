@@ -63,11 +63,11 @@ public abstract class TimeWidgetNotify {
         }
         timeline = new Timeline();
         stage = new Stage();
-        createNotify(owner);
     }
 
     public void createNotify(Stage owner) {
         gridPane = createColumnConstraintedGridPane(25);
+        gridPane.getStylesheets().add(getClass().getResource("/TimeWidget/style.css").toExternalForm());
         //gridPane.setGridLinesVisible(true);
 
         Text title = new Text(name);
@@ -87,6 +87,14 @@ public abstract class TimeWidgetNotify {
         BorderPane borderPane = new BorderPane(imageView);
         gridPane.add(borderPane, 0, 1, 4, 2 );
 
+        setNotifyText();
+        notifytxt.getStyleClass().add("notify");
+
+        BorderPane notifyPane = new BorderPane();
+        notifyPane.setCenter(notifytxt);
+        gridPane.add(notifyPane,0,3,4,1);
+
+
         if(hasMedia) {
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAutoPlay(true);
@@ -96,7 +104,7 @@ public abstract class TimeWidgetNotify {
             MediaView mediaView = new MediaView(mediaPlayer);
             BorderPane mediaPane = new BorderPane();
             mediaPane.setCenter(mediaView);
-            gridPane.add(mediaPane, 0, 3, 4, 1);
+            gridPane.add(mediaPane, 0, 4, 4, 1);
 
             GridPane mediaControls = createColumnConstraintedGridPane(12.5);
             mediaControls.setPadding(new Insets(0));
@@ -210,7 +218,7 @@ public abstract class TimeWidgetNotify {
 
             mediaControls.add(volumeslider, 5, 1, 4, 1);
 
-            gridPane.add(mediaControls, 0, 4, 4, 2);
+            gridPane.add(mediaControls, 0, 5, 4, 2);
 
             mediaPlayer.currentTimeProperty().addListener(new InvalidationListener() {
                 @Override
@@ -246,11 +254,6 @@ public abstract class TimeWidgetNotify {
 
         }
 
-        setNotifyText();
-
-        BorderPane notifyPane = new BorderPane();
-        notifyPane.setCenter(notifytxt);
-        gridPane.add(notifyPane,0,6,4,1);
 
         setActionButtons();
 

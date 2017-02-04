@@ -5,13 +5,21 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.time.LocalTime;
+import java.time.temporal.TemporalUnit;
 
 public class AlarmNotify extends TimeWidgetNotify{
     private long snoozetime;
+    private LocalTime current;
 
     public AlarmNotify(Stage owner, String name, String time, String mediasrc, long snoozetime) {
         super(owner, name, time, mediasrc);
+        this.snoozetime = snoozetime;
+        this.current = LocalTime.parse(time);
+        createNotify(owner);
     }
 
     @Override
@@ -23,7 +31,7 @@ public class AlarmNotify extends TimeWidgetNotify{
 
     @Override
     public void setNotifyText() {
-
+        notifytxt = new Text(getTime());
     }
 
     @Override
@@ -62,9 +70,20 @@ public class AlarmNotify extends TimeWidgetNotify{
             Thread.sleep(snoozetime);
             stage.show();
             mediaPlayer.play();
+            setCurrent(current.plusSeconds(snoozetime/1000));
+            notifytxt.setText(getCurrent().toString());
         }
         catch (InterruptedException e) {
 
         }
     }
+
+    public LocalTime getCurrent() {
+        return this.current;
+    }
+
+    public void setCurrent(LocalTime newtime) {
+        this.current = newtime;
+    }
+
 }

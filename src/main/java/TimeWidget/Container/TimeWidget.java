@@ -37,11 +37,12 @@ public abstract class TimeWidget {
 
         Image closeimg = new Image(getClass().getResourceAsStream("/ic_clear_black_24dp_1x.png"));
         ImageView closebtn = new ImageView(closeimg);
-        closebtn.setOnMouseClicked((event -> {
-            closeEvent();
-        }));
+
         BorderPane borderPane = new BorderPane();
         borderPane.setRight(closebtn);
+        borderPane.setOnMouseClicked((event -> {
+            closeEvent();
+        }));
         widget.add(borderPane, 3, 0);
 
         createWidgetBottom();
