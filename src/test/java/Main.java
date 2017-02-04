@@ -1,3 +1,6 @@
+import Alarm.AlarmCreateTest;
+import Alarm.AlarmNotifyTest;
+import Alarm.AlarmTest;
 import Stopwatch.StopwatchCreateTest;
 import Stopwatch.StopwatchTest;
 import TimeWidget.Index;
@@ -6,6 +9,11 @@ import Timer.TimerNotifyTest;
 import Timer.TimerTest;
 import javafx.application.Application;
 import org.junit.Test;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.chrono.ChronoLocalDate;
 
 public class Main {
 
@@ -19,6 +27,39 @@ public class Main {
         });
         app.run();
     }
+    @Test
+    public void alarmTest() {
+        Thread app = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Application.launch(AlarmTest.class);
+            }
+        });
+        app.run();
+    }
+
+    @Test
+    public void alarmNotifyTest() {
+        Thread app = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Application.launch(AlarmNotifyTest.class);
+            }
+        });
+        app.run();
+    }
+
+    @Test
+    public void alarmreateTest() {
+        Thread app = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Application.launch(AlarmCreateTest.class);
+            }
+        });
+        app.run();
+    }
+
 
     @Test
     public void timerTest() {

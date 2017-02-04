@@ -1,6 +1,7 @@
 package TimeWidget;
 
 import TimeWidget.Alarm.AlarmView;
+import TimeWidget.Stopwatch.StopwatchCreate;
 import TimeWidget.Stopwatch.StopwatchView;
 import TimeWidget.Timer.TimerCreate;
 import TimeWidget.Timer.TimerView;
@@ -15,12 +16,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 
 import static TimeWidget.Container.CreateFunctions.*;
@@ -41,7 +40,7 @@ public class Index extends Application {
     public void start(Stage primaryStage) {
 
         GridPane gridPane = createColumnConstraintedGridPane(25);
-        gridPane.setGridLinesVisible(true);
+        //gridPane.setGridLinesVisible(true);
 
 
         HBox titlebx = new HBox();
@@ -54,19 +53,6 @@ public class Index extends Application {
 
 
         ContextMenu createmenu = new ContextMenu();
-        MenuItem alarmitm = new MenuItem("Alarm");
-        alarmitm.addEventHandler(ActionEvent.ACTION, (event -> {
-            System.out.println("Alarm Pressed");
-        }));
-        MenuItem timeritm = new MenuItem("Timer");
-        timeritm.addEventHandler(ActionEvent.ACTION, (event -> {
-            new TimerCreate(primaryStage, timerView);
-        }));
-        MenuItem stpwthitm = new MenuItem("StopWatch");
-        stpwthitm.addEventHandler(ActionEvent.ACTION, (event -> {
-            System.out.println("Stopwatch Pressed");
-        }));
-        createmenu.getItems().addAll(alarmitm, timeritm,stpwthitm);
 
         Button createbtn = new Button("Create");
         createbtn.setContextMenu(createmenu);
@@ -93,12 +79,37 @@ public class Index extends Application {
         timerTab.setContent(timerView.getListView());
 
         Tab stopwatchTab = createTab("Stopwatch");
+        stopwatchView = new StopwatchView();
         stopwatchTab.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/ic_watch_white_24dp_1x.png"))));
-
+        stopwatchTab.setContent(stopwatchView.getListView());
 
 
         tabPane.getTabs().addAll(alarmTab, timerTab, stopwatchTab);
         gridPane.add(tabPane, 0, 3, 4,1);
+
+
+        MenuItem alarmitm = new MenuItem("Alarm");
+        alarmitm.addEventHandler(ActionEvent.ACTION, (event -> {
+            if(!alarmTab.isSelected()) {
+                tabPane.getSelectionModel().select(alarmTab);
+            }
+            System.out.println("Alarm Pressed");
+        }));
+        MenuItem timeritm = new MenuItem("Timer");
+        timeritm.addEventHandler(ActionEvent.ACTION, (event -> {
+            if(!timerTab.isSelected()) {
+                tabPane.getSelectionModel().select(timerTab);
+            }
+            new TimerCreate(primaryStage, timerView);
+        }));
+        MenuItem stpwthitm = new MenuItem("StopWatch");
+        stpwthitm.addEventHandler(ActionEvent.ACTION, (event -> {
+            if(!stopwatchTab.isSelected()) {
+                tabPane.getSelectionModel().select(stopwatchTab);
+            }
+            new StopwatchCreate(primaryStage, stopwatchView);
+        }));
+        createmenu.getItems().addAll(alarmitm, timeritm,stpwthitm);
 
 
 

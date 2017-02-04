@@ -19,8 +19,8 @@ public class StopwatchView extends TimeWidgetView {
         listView = new ListView<>(stopwatches);
     }
 
-    public void createWidget(Stage owner, String name) {
-        Stopwatch stopwatch = new Stopwatch(this, owner, name);
+    public void createWidget(Stage owner, String name, boolean autostart) {
+        Stopwatch stopwatch = new Stopwatch(this, owner, name, autostart);
         stopwatches.add(stopwatch.getWidget());
     }
 

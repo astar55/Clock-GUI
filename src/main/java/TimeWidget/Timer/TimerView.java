@@ -2,7 +2,6 @@ package TimeWidget.Timer;
 
 import TimeWidget.Container.TimeWidgetView;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;

@@ -43,7 +43,7 @@ public class Timer extends TimeWidget {
         widget.add(hBox, 0,1,4,1);
 
         createTimeButtons();
-
+        executeExecutor();
     }
 
     @Override
@@ -54,6 +54,7 @@ public class Timer extends TimeWidget {
 
     }
 
+    @Override
     protected ScheduledFuture<?> createFutureTask() {
         ScheduledFuture<?> scheduledFuture = executor.scheduleAtFixedRate(new Runnable() {
             @Override

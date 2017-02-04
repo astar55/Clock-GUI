@@ -7,6 +7,7 @@ import java.util.concurrent.ScheduledFuture;
 import static TimeWidget.Alarm.AlarmView.getAlarms;
 
 public class Alarm extends TimeWidget {
+    private long snoozetime;
 
 
     public Alarm(String name) {
@@ -21,6 +22,11 @@ public class Alarm extends TimeWidget {
 
     @Override
     protected void executeExecutor() {
+
+    }
+
+    @Override
+    protected void resetTime() {
 
     }
 

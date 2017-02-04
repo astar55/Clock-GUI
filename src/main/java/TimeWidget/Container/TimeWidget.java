@@ -24,7 +24,9 @@ public abstract class TimeWidget {
     protected ScheduledThreadPoolExecutor executor;
     protected ScheduledFuture<?> futureTask;
     protected Stage owner;
-
+    protected Button startbtn;
+    protected Button resumebtn;
+    protected Button pausebtn;
 
     protected void createWidget() {
         widget = CreateFunctions.createColumnConstraintedGridPane(25);
@@ -43,7 +45,6 @@ public abstract class TimeWidget {
         widget.add(borderPane, 3, 0);
 
         createWidgetBottom();
-        executeExecutor();
 
 
     }
@@ -53,9 +54,9 @@ public abstract class TimeWidget {
     abstract protected void executeExecutor();
 
     protected void createTimeButtons() {
-        Button startbtn = new Button("Start");
-        Button resumebtn = new Button("Resume");
-        Button pausebtn = new Button("Pause");
+        startbtn = new Button("Start");
+        resumebtn = new Button("Resume");
+        pausebtn = new Button("Pause");
         startbtn.addEventHandler(ActionEvent.ACTION, (event -> {
             this.started = true;
             this.paused = false;
@@ -97,7 +98,7 @@ public abstract class TimeWidget {
         widget.add(borderPane, 3,2);
     }
 
-    protected void resetTime() {}
+    protected abstract void resetTime();
 
     protected abstract ScheduledFuture<?> createFutureTask();
 

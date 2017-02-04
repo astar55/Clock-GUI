@@ -1,5 +1,6 @@
 package Stopwatch;
 
+import TimeWidget.Stopwatch.StopwatchCreate;
 import TimeWidget.Stopwatch.StopwatchView;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -20,18 +21,8 @@ public class StopwatchTest extends Application{
 
         StopwatchView testview = new StopwatchView();
 
-        //createWidget("Hoo", Duration.ofSeconds(61));
-        //createWidget("Hoo", Duration.ofSeconds(71));
-        //createWidget("Boo", Duration.ofSeconds(59));
-        //createWidget("", Duration.ofSeconds(9));
-        //createWidget("a", Duration.ofMinutes(65));
-        //createWidget("a", Duration.ofMinutes(85));
-        //createWidget("a", Duration.ofMinutes(65));
-        //createWidget("", Duration.ofDays(1));
-        //testview.createWidget("", Duration.ofSeconds(2));
-
         createbtn.setOnMouseClicked(event -> {
-            //new StopwatchCreate(primaryStage, testview);
+            new StopwatchCreate(primaryStage, testview);
         });
         gridPane.add(createbtn, 3,0);
 

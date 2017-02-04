@@ -30,27 +30,27 @@ import javafx.util.Duration;
 import static TimeWidget.Container.CreateFunctions.createColumnConstraintedGridPane;
 
 public abstract class TimeWidgetNotify {
-    private String name;
-    private String time;
-    private Stage stage;
-    private Media media;
-    private MediaPlayer mediaPlayer;
-    private BorderPane volumebtnpane;
-    private ImageView volup;
-    private ImageView voldown;
-    private ImageView volmute;
+    protected String name;
+    protected String time;
+    protected Stage stage;
+    protected Media media;
+    protected MediaPlayer mediaPlayer;
+    protected BorderPane volumebtnpane;
+    protected ImageView volup;
+    protected ImageView voldown;
+    protected ImageView volmute;
     final Timeline timeline;
-    private boolean hasMedia = true;
+    protected boolean hasMedia = true;
     protected Text notifytxt;
-    private boolean paused = false;
-    private Duration currentDuration;
-    private Duration mediaDuration;
-    private Text playtime;
-    private Slider volumeslider;
-    private double currentvol;
-    private boolean muted = false;
-    private Slider seekbar;
-
+    protected boolean paused = false;
+    protected Duration currentDuration;
+    protected Duration mediaDuration;
+    protected Text playtime;
+    protected Slider volumeslider;
+    protected double currentvol;
+    protected boolean muted = false;
+    protected Slider seekbar;
+    protected GridPane gridPane;
 
     public TimeWidgetNotify(Stage owner, String name, String time, String mediasrc){
         this.name = name;
@@ -67,7 +67,7 @@ public abstract class TimeWidgetNotify {
     }
 
     public void createNotify(Stage owner) {
-        GridPane gridPane = createColumnConstraintedGridPane(25);
+        gridPane = createColumnConstraintedGridPane(25);
         //gridPane.setGridLinesVisible(true);
 
         Text title = new Text(name);
@@ -252,6 +252,19 @@ public abstract class TimeWidgetNotify {
         notifyPane.setCenter(notifytxt);
         gridPane.add(notifyPane,0,6,4,1);
 
+        setActionButtons();
+
+        stage.setScene(new Scene(gridPane, 325, 300));
+        stage.initOwner(owner);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        if (hasMedia && (media.getSource().substring(media.getSource().lastIndexOf(".")+1).equals("mp4"))) {
+            stage.setMaximized(true);
+        }
+        stage.showAndWait();
+    }
+
+    public void setActionButtons() {
         Button dismissbtn = new Button("Dismiss");
         dismissbtn.minWidthProperty().bind(stage.widthProperty().subtract(10));
         dismissbtn.addEventHandler(ActionEvent.ACTION, (event -> {
@@ -262,14 +275,6 @@ public abstract class TimeWidgetNotify {
         }));
         gridPane.add(dismissbtn, 0,7,4,1);
 
-        stage.setScene(new Scene(gridPane, 325, 300));
-        stage.initOwner(owner);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initStyle(StageStyle.UNDECORATED);
-        if (hasMedia && (media.getSource().substring(media.getSource().lastIndexOf(".")+1).equals("mp4"))) {
-            stage.setMaximized(true);
-        }
-        stage.showAndWait();
     }
 
     public void updateTime() {
