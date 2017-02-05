@@ -15,9 +15,11 @@ import java.time.LocalTime;
 
 public class AlarmCreate extends TimeCreate{
     private static String type = "Alarm";
+    private AlarmView alarmView;
 
-    public AlarmCreate(Stage owner) {
+    public AlarmCreate(Stage owner, AlarmView alarmView) {
         super(owner);
+        this.alarmView = alarmView;
     }
 
     @Override
@@ -107,6 +109,14 @@ public class AlarmCreate extends TimeCreate{
         Button createbtn = new Button("Create");
         createbtn.setOnMouseClicked(event -> {
             stage.close();
+            LocalTime time;
+            if (twentyfourfm.isSelected()){
+                time = LocalTime.of(hrcb.getValue() , mincb.getValue());
+            }
+            else{
+                time = ampmcb.getValue().equals("AM") ? LocalTime.of((hrcb.getValue() < 12 ? hrcb.getValue() : 0 ), mincb.getValue()) : LocalTime.of((hrcb.getValue() < 12 ? 12 + hrcb.getValue() : 12 ) , mincb.getValue());
+            }
+            alarmView.createWidget(owner, nametf.getText(), time, snoozecb.getValue(),audiotxt.getText());
 
         });
         gridPane.add(createbtn, 0, 7);

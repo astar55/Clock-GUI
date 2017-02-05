@@ -5,7 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
+import java.time.LocalTime;
 import java.util.List;
 
 public class AlarmView extends TimeWidgetView{
@@ -24,8 +26,8 @@ public class AlarmView extends TimeWidgetView{
         */
     }
 
-    public void createWidget(String name) {
-        Alarm alarm = new Alarm(name);
+    public void createWidget(Stage owner, String name, LocalTime time, int snoozetime, String media) {
+        Alarm alarm = new Alarm(this, owner, name, time, snoozetime, media);
         alarms.add(alarm.getWidget());
     }
 

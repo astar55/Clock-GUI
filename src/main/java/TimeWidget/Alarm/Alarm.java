@@ -1,17 +1,28 @@
 package TimeWidget.Alarm;
 
 import TimeWidget.Container.TimeWidget;
+import javafx.stage.Stage;
 
+import java.time.LocalTime;
 import java.util.concurrent.ScheduledFuture;
 
 import static TimeWidget.Alarm.AlarmView.getAlarms;
 
 public class Alarm extends TimeWidget {
+
+    private AlarmView alarmView;
+    private LocalTime time;
     private long snoozetime;
+    private LocalTime alarmtime;
 
 
-    public Alarm(String name) {
+    public Alarm(AlarmView alarmView, Stage owner, String name, LocalTime time, int snoozetime, String media) {
+        this.alarmView = alarmView;
+        this.owner = owner;
         this.name = name;
+        this.time = time;
+        this.snoozetime = snoozetime;
+        this.mediasrc = media;
         createWidget();
     }
 
