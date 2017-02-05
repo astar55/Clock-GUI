@@ -9,7 +9,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.time.LocalTime;
-import java.time.temporal.TemporalUnit;
 
 public class AlarmNotify extends TimeWidgetNotify{
     private long snoozetime;

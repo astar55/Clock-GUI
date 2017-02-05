@@ -114,7 +114,7 @@ public class TimerCreate extends TimeCreate{
         });
         gridPane.add(cancelbtn,3,6);
 
-        createTitle(type);
+        stage.setTitle(createTitle(type));
     }
 
     private ObservableList hourlist() {

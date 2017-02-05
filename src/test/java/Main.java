@@ -45,7 +45,7 @@ public class Main {
     }
 
     @Test
-    public void alarmreateTest() {
+    public void alarmCreateTest() {
         Thread app = new Thread(new Runnable() {
             @Override
             public void run() {

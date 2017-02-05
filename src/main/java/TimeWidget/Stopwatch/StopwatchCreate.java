@@ -11,6 +11,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class StopwatchCreate extends TimeCreate{
+    private static String type = "Stopwatch";
     StopwatchView stopwatchView;
 
     public StopwatchCreate(Stage owner, StopwatchView stopwatchView) {
@@ -46,5 +47,7 @@ public class StopwatchCreate extends TimeCreate{
             stage.close();
         });
         gridPane.add(cancelbtn, 3,5);
+
+        stage.setTitle(createTitle(type));
     }
 }

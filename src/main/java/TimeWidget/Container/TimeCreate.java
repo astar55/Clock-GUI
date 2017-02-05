@@ -47,8 +47,8 @@ public abstract class TimeCreate {
 
     public abstract void createCenter();
 
-    public Text createTitle(String type) {
-        Text title = new Text("Create " + type );
+    public String createTitle(String type) {
+        String title ="Create " + type;
         return title;
     }
 }
