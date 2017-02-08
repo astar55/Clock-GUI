@@ -58,11 +58,23 @@ public class AlarmCreate extends TimeCreate{
         twentyfourfm.addEventHandler(ActionEvent.ACTION, event -> {
             hrcb.setItems(twentyfourlist());
             if(gridPane.getChildren().contains(ampmcb)) {
+                hrcb.setValue(ampmcb.getValue().equals("PM") ? (hrcb.getValue() < 12 ? 12 + hrcb.getValue() : 12) : (hrcb.getValue() < 12 ? hrcb.getValue() : 0));
                 gridPane.getChildren().remove(ampmcb);
             }
         });
 
         twelevefm.addEventHandler(ActionEvent.ACTION, event -> {
+            if (hrcb.getValue() > 12) {
+                hrcb.setValue(hrcb.getValue() - 12);
+                ampmcb.setValue("PM");
+            }
+            else  if(hrcb.getValue() == 12 ){
+                ampmcb.setValue("PM");
+            }
+            else if(hrcb.getValue() == 0) {
+                hrcb.setValue(12);
+                ampmcb.setValue("AM");
+            }
             hrcb.setItems(twelevelist());
             gridPane.add(ampmcb, 3,4);
         });
