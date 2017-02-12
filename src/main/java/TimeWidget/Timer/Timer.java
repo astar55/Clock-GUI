@@ -91,11 +91,6 @@ public class Timer extends TimeWidget {
     }
 
     @Override
-    protected void cancelExecutor() {
-        getFutureTask().cancel(true);
-    }
-
-    @Override
     protected void updateGUI() {
         Platform.runLater(new Runnable() {
             @Override

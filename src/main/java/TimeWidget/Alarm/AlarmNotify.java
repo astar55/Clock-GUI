@@ -1,6 +1,7 @@
 package TimeWidget.Alarm;
 
 import TimeWidget.Container.TimeWidgetNotify;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -8,16 +9,23 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.time.Duration;
 import java.time.LocalTime;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class AlarmNotify extends TimeWidgetNotify{
     private long snoozetime;
     private LocalTime current;
+    private ScheduledThreadPoolExecutor executor;
+    private ScheduledFuture<?> scheduledFuture;
 
     public AlarmNotify(Stage owner, String name, String time, String mediasrc, long snoozetime) {
         super(owner, name, time, mediasrc);
         this.snoozetime = snoozetime;
         this.current = LocalTime.parse(time);
+        executor = new ScheduledThreadPoolExecutor(1);
         createNotify(owner);
     }
 
@@ -41,6 +49,7 @@ public class AlarmNotify extends TimeWidgetNotify{
             if(hasMedia) {
                 mediaPlayer.stop();
             }
+            executor.shutdown();
             stage.close();
         }));
         gridPane.add(dismissbtn, 0, 8, 4,1);
@@ -52,29 +61,28 @@ public class AlarmNotify extends TimeWidgetNotify{
                 mediaPlayer.stop();
             }
             stage.hide();
-            Thread snoozethread = new Thread(new Runnable() {
+            Duration diff = Duration.between(LocalTime.now(), current.plusSeconds(snoozetime/1000));
+            scheduledFuture = executor.schedule(new Runnable() {
                 @Override
                 public void run() {
-                    snoozefun();
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            snoozefun();
+                        }
+                    });
                 }
-            });
-            snoozethread.run();
+            }, diff.toMillis(), TimeUnit.MILLISECONDS);
         }));
         gridPane.add(snoozebtn, 0, 7, 4,1);
 
     }
 
     private void snoozefun() {
-        try {
-            Thread.sleep(snoozetime);
-            stage.show();
-            mediaPlayer.play();
-            setCurrent(current.plusSeconds(snoozetime/1000));
-            notifytxt.setText(getCurrent().toString());
-        }
-        catch (InterruptedException e) {
-
-        }
+        stage.show();
+        mediaPlayer.play();
+        setCurrent(current.plusSeconds(snoozetime/1000));
+        notifytxt.setText(getCurrent().toString());
     }
 
     public LocalTime getCurrent() {

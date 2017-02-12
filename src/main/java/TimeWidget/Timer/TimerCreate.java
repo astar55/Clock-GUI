@@ -73,12 +73,14 @@ public class TimerCreate extends TimeCreate{
         });
         gridPane.add(seccb, 3,3);
 
-        Label audiolbl = new Label("Audio");
+        HBox audiolbl = createAlignedLabel("Audio", Pos.CENTER);
         gridPane.add(audiolbl,0,4);
 
+        ScrollPane scrollPane = new ScrollPane();
         Text audiotxt = new Text();
-        audiotxt.setWrappingWidth(145);
-        gridPane.add(audiotxt, 1,4,2,1);
+        audiotxt.setWrappingWidth(140);
+        scrollPane.setContent(audiotxt);
+        gridPane.add(scrollPane, 1,4,2,1);
 
         Button audiobtn = new Button("Browse");
         audiobtn.setOnMouseClicked((event -> {

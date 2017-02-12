@@ -1,6 +1,7 @@
 package TimeWidget.Alarm;
 
 import TimeWidget.Container.TimeWidget;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -8,23 +9,22 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.time.Duration;
 import java.time.LocalTime;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import static TimeWidget.Alarm.AlarmView.getAlarms;
 import static TimeWidget.Index.addExecutors;
+import static TimeWidget.Index.removeExecutors;
 
 public class Alarm extends TimeWidget {
 
     private AlarmView alarmView;
     private LocalTime time;
     private long snoozetime;
-    private LocalTime alarmtime;
     private ImageView offalarmswitch, onalarmswitch;
-    private ThreadPoolExecutor poolExecutor;
 
 
     public Alarm(AlarmView alarmView, Stage owner, String name, LocalTime time, int snoozetime, String media) {
@@ -59,9 +59,11 @@ public class Alarm extends TimeWidget {
         alarmswitchPane.setOnMouseClicked(event -> {
             if (alarmswitchPane.getChildren().contains(onalarmswitch)) {
                 alarmswitchPane.setCenter(offalarmswitch);
+                cancelExecutor();
             }
             else {
                 alarmswitchPane.setCenter(onalarmswitch);
+                futureTask = createFutureTask();
             }
         });
 
@@ -70,8 +72,8 @@ public class Alarm extends TimeWidget {
 
     @Override
     protected void executeExecutor() {
-        poolExecutor = new ThreadPoolExecutor(1,1,1, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(1));
-        addExecutors(poolExecutor);
+        executor = new ScheduledThreadPoolExecutor(2);
+        addExecutors(executor);
         futureTask = createFutureTask();
     }
 
@@ -82,14 +84,25 @@ public class Alarm extends TimeWidget {
 
     @Override
     protected ScheduledFuture<?> createFutureTask() {
+        LocalTime now = LocalTime.now();
+        Duration delayduration = Duration.between(now, time).isNegative() ? Duration.between(now, time).plusHours(24) :Duration.between(now, time);
+        ScheduledFuture scheduledFuture = executor.schedule(new Runnable() {
+            @Override
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        new AlarmNotify(owner, name, time.toString(), mediasrc, snoozetime);
+                    }
+                });
+                if(futureTask.isDone()) {
+                    futureTask = createFutureTask();
+                }
+            }
+        },delayduration.toMillis(), TimeUnit.MILLISECONDS);
 
 
-        return null;
-    }
-
-    @Override
-    protected void cancelExecutor() {
-
+        return scheduledFuture;
     }
 
     @Override
@@ -99,6 +112,10 @@ public class Alarm extends TimeWidget {
 
     @Override
     protected void closeEvent() {
+        cancelExecutor();
+        getExecutor().shutdown();
+        removeExecutors(executor);
         getAlarms().remove(getWidget());
     }
+
 }

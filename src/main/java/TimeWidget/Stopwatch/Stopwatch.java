@@ -77,11 +77,6 @@ public class Stopwatch extends TimeWidget{
     }
 
     @Override
-    protected void cancelExecutor() {
-        getFutureTask().cancel(true);
-    }
-
-    @Override
     protected String timeFormat(Duration time){
         String timetxt;
         if (time.toMillis() < 1000 * 60) {

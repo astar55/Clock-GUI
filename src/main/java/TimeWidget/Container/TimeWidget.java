@@ -103,7 +103,9 @@ public abstract class TimeWidget {
 
     protected abstract ScheduledFuture<?> createFutureTask();
 
-    protected abstract void cancelExecutor();
+    protected void cancelExecutor() {
+        getFutureTask().cancel(true);
+    };
 
     protected String timeFormat(Duration time){
         String timetxt;

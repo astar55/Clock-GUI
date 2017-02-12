@@ -4,13 +4,17 @@ import TimeWidget.Container.TimeCreate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.time.LocalTime;
+
+import static TimeWidget.Container.CreateFunctions.createAlignedLabel;
 
 public class AlarmCreate extends TimeCreate{
     private static String type = "Alarm";
@@ -91,12 +95,14 @@ public class AlarmCreate extends TimeCreate{
         Label snoozeunitlbl = new Label("Minutes");
         gridPane.add(snoozeunitlbl, 2,5);
 
-        Label audiolbl = new Label("Audio");
+        HBox audiolbl = createAlignedLabel("Audio", Pos.CENTER);
         gridPane.add(audiolbl,0,6);
 
+        ScrollPane scrollPane = new ScrollPane();
         Text audiotxt = new Text();
-        audiotxt.setWrappingWidth(145);
-        gridPane.add(audiotxt, 1,6,2,1);
+        audiotxt.setWrappingWidth(140);
+        scrollPane.setContent(audiotxt);
+        gridPane.add(scrollPane, 1,6,2,1);
 
         Button audiobtn = new Button("Browse");
         audiobtn.setOnMouseClicked((event -> {
@@ -127,7 +133,7 @@ public class AlarmCreate extends TimeCreate{
             else{
                 time = ampmcb.getValue().equals("AM") ? LocalTime.of((hrcb.getValue() < 12 ? hrcb.getValue() : 0 ), mincb.getValue()) : LocalTime.of((hrcb.getValue() < 12 ? 12 + hrcb.getValue() : 12 ) , mincb.getValue());
             }
-            alarmView.createWidget(owner, nametf.getText(), time, snoozecb.getValue(),audiotxt.getText());
+            alarmView.createWidget(owner, nametf.getText(), time, snoozecb.getValue()*1000*60,audiotxt.getText());
 
         });
         gridPane.add(createbtn, 0, 7);
