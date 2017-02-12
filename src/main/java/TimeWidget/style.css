@@ -15,6 +15,11 @@
     -fx-background: aqua;
 }
 
+.gridbg {
+    -fx-background-color: aqua;
+}
+
+
 .context-menu {
     -fx-background-color: lavender;
 }
@@ -31,4 +36,17 @@
 .notify {
     -fx-font-size: 14;
     -fx-fill: darkcyan;
+}
+
+.list-cell {
+   -fx-background: powderblue;
+}
+
+.list-cell:odd {
+    -fx-background: skyblue;
+}
+
+.widget {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: white;
 }

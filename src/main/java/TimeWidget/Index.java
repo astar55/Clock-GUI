@@ -1,5 +1,6 @@
 package TimeWidget;
 
+import TimeWidget.Alarm.AlarmCreate;
 import TimeWidget.Alarm.AlarmView;
 import TimeWidget.Stopwatch.StopwatchCreate;
 import TimeWidget.Stopwatch.StopwatchView;
@@ -93,7 +94,7 @@ public class Index extends Application {
             if(!alarmTab.isSelected()) {
                 tabPane.getSelectionModel().select(alarmTab);
             }
-            System.out.println("Alarm Pressed");
+            new AlarmCreate(primaryStage, alarmView);
         }));
         MenuItem timeritm = new MenuItem("Timer");
         timeritm.addEventHandler(ActionEvent.ACTION, (event -> {
