@@ -17,8 +17,14 @@ import java.time.LocalTime;
 import static TimeWidget.Container.CreateFunctions.createAlignedLabel;
 
 public class AlarmCreate extends TimeCreate{
-    private static String type = "Alarm";
-    private AlarmView alarmView;
+    final protected static String type = "Alarm";
+    protected AlarmView alarmView;
+    protected RadioButton twentyfourfm;
+    protected RadioButton twelevefm;
+    protected ComboBox<Integer> hrcb, mincb;
+    protected ComboBox<String> ampmcb;
+    protected ComboBox<Integer> snoozecb;
+    protected Text audiotxt;
 
     public AlarmCreate(Stage owner, AlarmView alarmView) {
         super(owner);
@@ -28,34 +34,34 @@ public class AlarmCreate extends TimeCreate{
     @Override
     public void createCenter() {
 
-        TextField nametf = new TextField("Alarm");
+        TextField nametf = new TextField(type);
         gridPane.add(nametf, 1, 2, 3 ,1);
 
         Label timeformatlbl = new Label("Time Format");
         gridPane.add(timeformatlbl, 0, 3, 2, 1);
 
         ToggleGroup timeformattg = new ToggleGroup();
-        RadioButton twentyfourfm = new RadioButton("24-Hour");
+        twentyfourfm = new RadioButton("24-Hour");
         twentyfourfm.setToggleGroup(timeformattg);
         twentyfourfm.setSelected(true);
         gridPane.add(twentyfourfm,1,3, 2,1);
 
-        RadioButton twelevefm = new RadioButton("12-Hour");
+        twelevefm = new RadioButton("12-Hour");
         twelevefm.setToggleGroup(timeformattg);
         gridPane.add(twelevefm, 2,3,2,1);
 
         Label timelbl = new Label("Time");
         gridPane.add(timelbl, 0, 4);
 
-        ComboBox<Integer> hrcb = new ComboBox<Integer>(twentyfourlist());
+        hrcb = new ComboBox<Integer>(twentyfourlist());
         hrcb.setValue(LocalTime.now().getHour());
         gridPane.add(hrcb, 1,4);
 
-        ComboBox<Integer> mincb = new ComboBox<Integer>(minlist());
+        mincb = new ComboBox<Integer>(minlist());
         mincb.setValue(LocalTime.now().getMinute());
         gridPane.add(mincb, 2,4);
 
-        ComboBox<String> ampmcb = new ComboBox<String>(ampmlist());
+        ampmcb = new ComboBox<String>(ampmlist());
         ampmcb.setValue(LocalTime.now().getHour() <12 ? "AM" : "PM");
 
         twentyfourfm.addEventHandler(ActionEvent.ACTION, event -> {
@@ -88,7 +94,7 @@ public class AlarmCreate extends TimeCreate{
         snoozelbl.setTooltip(snoozetp);
         gridPane.add(snoozelbl, 0, 5);
 
-        ComboBox<Integer> snoozecb = new ComboBox<Integer>(snoozelen());
+        snoozecb = new ComboBox<Integer>(snoozelen());
         snoozecb.setValue(5);
         gridPane.add(snoozecb, 1,5,3,1);
 
@@ -99,7 +105,7 @@ public class AlarmCreate extends TimeCreate{
         gridPane.add(audiolbl,0,6);
 
         ScrollPane scrollPane = new ScrollPane();
-        Text audiotxt = new Text();
+        audiotxt = new Text();
         audiotxt.setWrappingWidth(140);
         scrollPane.setContent(audiotxt);
         gridPane.add(scrollPane, 1,6,2,1);
@@ -123,6 +129,12 @@ public class AlarmCreate extends TimeCreate{
         }));
         gridPane.add(audiobtn, 3,6);
 
+        createActionButtons();
+
+    }
+
+    @Override
+    public void createActionButtons() {
         Button createbtn = new Button("Create");
         createbtn.setOnMouseClicked(event -> {
             stage.close();
@@ -133,7 +145,7 @@ public class AlarmCreate extends TimeCreate{
             else{
                 time = ampmcb.getValue().equals("AM") ? LocalTime.of((hrcb.getValue() < 12 ? hrcb.getValue() : 0 ), mincb.getValue()) : LocalTime.of((hrcb.getValue() < 12 ? 12 + hrcb.getValue() : 12 ) , mincb.getValue());
             }
-            alarmView.createWidget(owner, nametf.getText(), time, snoozecb.getValue()*1000*60,audiotxt.getText());
+            alarmView.createWidget(owner, type, time, snoozecb.getValue()*1000*60,audiotxt.getText());
 
         });
         gridPane.add(createbtn, 0, 7);
@@ -145,9 +157,11 @@ public class AlarmCreate extends TimeCreate{
         });
         gridPane.add(cancelbtn,3,7);
 
+    }
 
+    @Override
+    public void setStageTitle(){
         stage.setTitle(createTitle(type));
-
     }
 
     private ObservableList<Integer> minlist() {

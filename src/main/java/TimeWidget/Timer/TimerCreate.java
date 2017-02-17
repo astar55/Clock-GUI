@@ -18,12 +18,13 @@ import java.time.Duration;
 import static TimeWidget.Container.CreateFunctions.createAlignedLabel;
 
 public class TimerCreate extends TimeCreate{
-    private static String type = "Timer";
-    ComboBox<Integer> hourcb;
-    ComboBox<Integer> mincb;
-    ComboBox<Integer> seccb;
-    Button createbtn;
-    TimerView timerView;
+    final private static String type = "Timer";
+    protected ComboBox<Integer> hourcb;
+    protected ComboBox<Integer> mincb;
+    protected ComboBox<Integer> seccb;
+    protected Button createbtn;
+    protected TimerView timerView;
+    protected Text audiotxt;
 
     public TimerCreate(Stage owner, TimerView timerView) {
         super(owner);
@@ -34,7 +35,7 @@ public class TimerCreate extends TimeCreate{
     public void createCenter() {
 
 
-        TextField nametxtfield = new TextField("Timer");
+        TextField nametxtfield = new TextField(type);
         gridPane.add(nametxtfield, 1,2,3,1);
 
         HBox timelbl = createAlignedLabel("Time", Pos.CENTER);
@@ -77,7 +78,7 @@ public class TimerCreate extends TimeCreate{
         gridPane.add(audiolbl,0,4);
 
         ScrollPane scrollPane = new ScrollPane();
-        Text audiotxt = new Text();
+        audiotxt = new Text();
         audiotxt.setWrappingWidth(140);
         scrollPane.setContent(audiotxt);
         gridPane.add(scrollPane, 1,4,2,1);
@@ -101,11 +102,16 @@ public class TimerCreate extends TimeCreate{
         }));
         gridPane.add(audiobtn, 3,4);
 
+        createActionButtons();
+    }
+
+    @Override
+    public void createActionButtons() {
         createbtn = new Button("Create");
         createbtn.setOnMouseClicked(event -> {
             stage.close();
             Duration duration = Duration.ofHours(hourcb.getValue()).plusMinutes(mincb.getValue()).plusSeconds(seccb.getValue());
-            timerView.createWidget(owner, nametxtfield.getText(), duration, audiotxt.getText());
+            timerView.createWidget(owner, type, duration, audiotxt.getText());
         });
         gridPane.add(createbtn, 0, 6);
 
@@ -116,6 +122,10 @@ public class TimerCreate extends TimeCreate{
         });
         gridPane.add(cancelbtn,3,6);
 
+    }
+
+    @Override
+    public void setStageTitle() {
         stage.setTitle(createTitle(type));
     }
 

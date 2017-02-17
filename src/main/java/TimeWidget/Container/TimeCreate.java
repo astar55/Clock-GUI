@@ -38,6 +38,8 @@ public abstract class TimeCreate {
 
         createCenter();
 
+        setStageTitle();
+
         stage.setScene(new Scene(gridPane, 300,275));
         stage.initOwner(owner);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -45,6 +47,10 @@ public abstract class TimeCreate {
     }
 
     public abstract void createCenter();
+
+    public abstract void createActionButtons();
+
+    public abstract void setStageTitle();
 
     public String createTitle(String type) {
         String title ="Create " + type;

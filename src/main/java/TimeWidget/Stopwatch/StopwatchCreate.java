@@ -11,8 +11,9 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class StopwatchCreate extends TimeCreate{
-    private static String type = "Stopwatch";
-    StopwatchView stopwatchView;
+    final private static String type = "Stopwatch";
+    protected StopwatchView stopwatchView;
+    protected CheckBox autostartchckbx;
 
     public StopwatchCreate(Stage owner, StopwatchView stopwatchView) {
         super(owner);
@@ -21,7 +22,7 @@ public class StopwatchCreate extends TimeCreate{
 
     @Override
     public void createCenter() {
-        TextField nametxtfield = new TextField("Stopwatch");
+        TextField nametxtfield = new TextField(type);
         gridPane.add(nametxtfield, 1,2,3,1);
 
         HBox autostartlblbox = new HBox();
@@ -30,14 +31,20 @@ public class StopwatchCreate extends TimeCreate{
         autostartlblbox.getChildren().add(autostartlbl);
         gridPane.add(autostartlblbox, 0,3);
 
-        CheckBox autostartchckbx = new CheckBox();
+        autostartchckbx = new CheckBox();
         autostartchckbx.setTextAlignment(TextAlignment.LEFT);
         autostartchckbx.setSelected(true);
         gridPane.add(autostartchckbx, 1,3, 4,1);
 
+        createActionButtons();
+
+    }
+
+    @Override
+    public void createActionButtons() {
         Button createbtn = new Button("Create");
         createbtn.setOnMouseClicked((event -> {
-            stopwatchView.createWidget(owner,nametxtfield.getText(),autostartchckbx.isSelected());
+            stopwatchView.createWidget(owner,type,autostartchckbx.isSelected());
             stage.close();
         }));
         gridPane.add(createbtn, 0, 5);
@@ -48,6 +55,11 @@ public class StopwatchCreate extends TimeCreate{
         });
         gridPane.add(cancelbtn, 3,5);
 
+    }
+
+    @Override
+    public void setStageTitle() {
         stage.setTitle(createTitle(type));
+
     }
 }
