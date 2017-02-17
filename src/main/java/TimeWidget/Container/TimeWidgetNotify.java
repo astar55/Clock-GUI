@@ -99,7 +99,7 @@ public abstract class TimeWidgetNotify {
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAutoPlay(true);
             mediaPlayer.setVolume(0.5);
-            //mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 
             MediaView mediaView = new MediaView(mediaPlayer);
             BorderPane mediaPane = new BorderPane();
