@@ -141,8 +141,8 @@ public abstract class TimeWidgetNotify {
 
             playpausepane = new BorderPane();
 
-            ImageView playbutton = new ImageView(new Image(getClass().getResourceAsStream("/ic_play_arrow_black_18dp_1x.png")));
-            ImageView pausebutton = new ImageView(new Image(getClass().getResourceAsStream("/ic_pause_black_18dp_1x.png")));
+            playbutton = new ImageView(new Image(getClass().getResourceAsStream("/ic_play_arrow_black_18dp_1x.png")));
+            pausebutton = new ImageView(new Image(getClass().getResourceAsStream("/ic_pause_black_18dp_1x.png")));
 
             playpausepane.setOnMouseClicked((event -> {
                 if(paused) {

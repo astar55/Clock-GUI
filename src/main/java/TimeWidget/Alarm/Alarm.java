@@ -24,8 +24,10 @@ public class Alarm extends TimeWidget {
     private AlarmView alarmView;
     private LocalTime time;
     private long snoozetime;
-    private ImageView offalarmswitch, onalarmswitch;
+    private BorderPane alarmswitchPane;
+    private ImageView offalarmswitch, onalarmswitch, snoozeswitch;
     private String timeformat;
+    final private Alarm alarm = this;
 
 
     public Alarm(AlarmView alarmView, Stage owner, String name, LocalTime time, String format, int snoozetime, String media) {
@@ -53,13 +55,14 @@ public class Alarm extends TimeWidget {
         widget.add(borderPane, 0, 1, 3, 1);
 
 
-        BorderPane alarmswitchPane = new BorderPane();
+        alarmswitchPane = new BorderPane();
         offalarmswitch = new ImageView(new Image(getClass().getResourceAsStream("/ic_alarm_black_48dp_1x.png")));
         onalarmswitch = new ImageView(new Image(getClass().getResourceAsStream("/ic_alarm_white_24dp_2x.png")));
+        snoozeswitch = new ImageView(new Image(getClass().getResourceAsStream("/ic_snooze_white_24dp_2x.png")));
         alarmswitchPane.setCenter(onalarmswitch);
         widget.add(alarmswitchPane, 3,1);
         alarmswitchPane.setOnMouseClicked(event -> {
-            if (alarmswitchPane.getChildren().contains(onalarmswitch)) {
+            if (alarmswitchPane.getChildren().contains(onalarmswitch) || alarmswitchPane.getChildren().contains(snoozeswitch)) {
                 alarmswitchPane.setCenter(offalarmswitch);
                 cancelExecutor();
             }
@@ -94,7 +97,7 @@ public class Alarm extends TimeWidget {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        new AlarmNotify(owner, name, time, timeformat, mediasrc, snoozetime);
+                        new AlarmNotify(alarm, owner, name, time, timeformat, mediasrc, snoozetime);
                     }
                 });
                 if(futureTask.isDone()) {
@@ -128,6 +131,10 @@ public class Alarm extends TimeWidget {
         getExecutor().shutdown();
         removeExecutors(executor);
         alarmView.getAlarms().remove(getWidget());
+    }
+
+    public void setSnoozeswitch(){
+        alarmswitchPane.setCenter(snoozeswitch);
     }
 
 }

@@ -16,19 +16,24 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static TimeWidget.Index.addExecutors;
+
 public class AlarmNotify extends TimeWidgetNotify{
     private long snoozetime;
     private LocalTime current;
     private ScheduledThreadPoolExecutor executor;
     private ScheduledFuture<?> scheduledFuture;
     private String timeformat;
+    private Alarm alarm;
 
-    public AlarmNotify(Stage owner, String name, LocalTime time, String timeformat, String mediasrc, long snoozetime) {
+    public AlarmNotify(Alarm alarm, Stage owner, String name, LocalTime time, String timeformat, String mediasrc, long snoozetime) {
         super(owner, name, time.toString(), mediasrc);
+        this.alarm = alarm;
         this.snoozetime = snoozetime;
         this.current = time;
         this.timeformat = timeformat;
         executor = new ScheduledThreadPoolExecutor(1);
+        addExecutors(executor);
         createNotify(owner);
     }
 
@@ -76,6 +81,12 @@ public class AlarmNotify extends TimeWidgetNotify{
                     });
                 }
             }, diff.toMillis(), TimeUnit.MILLISECONDS);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    alarm.setSnoozeswitch();
+                }
+            });
         }));
         gridPane.add(snoozebtn, 0, 7, 4,1);
 
