@@ -26,8 +26,8 @@ public class AlarmView extends TimeWidgetView{
         */
     }
 
-    public void createWidget(Stage owner, String name, LocalTime time, int snoozetime, String media) {
-        Alarm alarm = new Alarm(this, owner, name, time, snoozetime, media);
+    public void createWidget(Stage owner, String name, LocalTime time, String format, int snoozetime, String media) {
+        Alarm alarm = new Alarm(this, owner, name, time, format,snoozetime, media);
         alarms.add(alarm.getWidget());
     }
 

@@ -139,13 +139,16 @@ public class AlarmCreate extends TimeCreate{
         createbtn.setOnMouseClicked(event -> {
             stage.close();
             LocalTime time;
+            String timeformat;
             if (twentyfourfm.isSelected()){
                 time = LocalTime.of(hrcb.getValue() , mincb.getValue());
+                timeformat = "24";
             }
             else{
                 time = ampmcb.getValue().equals("AM") ? LocalTime.of((hrcb.getValue() < 12 ? hrcb.getValue() : 0 ), mincb.getValue()) : LocalTime.of((hrcb.getValue() < 12 ? 12 + hrcb.getValue() : 12 ) , mincb.getValue());
+                timeformat = "12";
             }
-            alarmView.createWidget(owner, type, time, snoozecb.getValue()*1000*60,audiotxt.getText());
+            alarmView.createWidget(owner, type, time, timeformat, snoozecb.getValue()*1000*60,audiotxt.getText());
 
         });
         gridPane.add(createbtn, 0, 7);

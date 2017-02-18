@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -25,13 +26,15 @@ public class Alarm extends TimeWidget {
     private LocalTime time;
     private long snoozetime;
     private ImageView offalarmswitch, onalarmswitch;
+    private String timeformat;
 
 
-    public Alarm(AlarmView alarmView, Stage owner, String name, LocalTime time, int snoozetime, String media) {
+    public Alarm(AlarmView alarmView, Stage owner, String name, LocalTime time, String format, int snoozetime, String media) {
         this.alarmView = alarmView;
         this.owner = owner;
         this.name = name;
         this.time = time;
+        this.timeformat = format;
         this.snoozetime = snoozetime;
         this.mediasrc = media;
         createWidget();
@@ -46,7 +49,7 @@ public class Alarm extends TimeWidget {
         widget.getRowConstraints().addAll(rowConstraints);
 
         BorderPane borderPane = new BorderPane();
-        timetxt = new Text(this.time.toString());
+        timetxt = new Text(formatTime(this.time));
         borderPane.setCenter(timetxt);
         widget.add(borderPane, 0, 1, 3, 1);
 
@@ -92,7 +95,7 @@ public class Alarm extends TimeWidget {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        new AlarmNotify(owner, name, time.toString(), mediasrc, snoozetime);
+                        new AlarmNotify(owner, name, formatTime(time), mediasrc, snoozetime);
                     }
                 });
                 if(futureTask.isDone()) {
@@ -103,6 +106,16 @@ public class Alarm extends TimeWidget {
 
 
         return scheduledFuture;
+    }
+
+    protected String formatTime(LocalTime time){
+        String timetxt;
+        if (timeformat.equals("24")){
+            timetxt = time.toString();
+        }else {
+            timetxt = time.format(DateTimeFormatter.ofPattern("hh:mm a"));
+        }
+        return timetxt;
     }
 
     @Override
