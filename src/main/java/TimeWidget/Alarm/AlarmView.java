@@ -31,7 +31,7 @@ public class AlarmView extends TimeWidgetView{
         alarms.add(alarm.getWidget());
     }
 
-    public static List<GridPane> getAlarms() {
+    public List<GridPane> getAlarms() {
         return alarms;
     }
 

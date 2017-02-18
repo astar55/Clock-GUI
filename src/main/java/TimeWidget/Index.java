@@ -129,6 +129,7 @@ public class Index extends Application {
     public void stop() {
         for(ExecutorService executor : executors) {
             executor.shutdown();
+            executor.shutdownNow();
         }
     }
 

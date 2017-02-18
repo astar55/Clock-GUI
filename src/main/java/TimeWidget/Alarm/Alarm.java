@@ -16,7 +16,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import static TimeWidget.Alarm.AlarmView.getAlarms;
 import static TimeWidget.Index.addExecutors;
 import static TimeWidget.Index.removeExecutors;
 
@@ -128,7 +127,7 @@ public class Alarm extends TimeWidget {
         cancelExecutor();
         getExecutor().shutdown();
         removeExecutors(executor);
-        getAlarms().remove(getWidget());
+        alarmView.getAlarms().remove(getWidget());
     }
 
 }
