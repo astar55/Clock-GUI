@@ -20,11 +20,13 @@ public class AlarmNotify extends TimeWidgetNotify{
     private LocalTime current;
     private ScheduledThreadPoolExecutor executor;
     private ScheduledFuture<?> scheduledFuture;
+    private String timetxt;
 
-    public AlarmNotify(Stage owner, String name, String time, String mediasrc, long snoozetime) {
-        super(owner, name, time, mediasrc);
+    public AlarmNotify(Stage owner, String name, LocalTime time, String timetxt, String mediasrc, long snoozetime) {
+        super(owner, name, time.toString(), mediasrc);
         this.snoozetime = snoozetime;
-        this.current = LocalTime.parse(time);
+        this.current = time;
+        this.timetxt = timetxt;
         executor = new ScheduledThreadPoolExecutor(1);
         createNotify(owner);
     }
@@ -38,7 +40,7 @@ public class AlarmNotify extends TimeWidgetNotify{
 
     @Override
     public void setNotifyText() {
-        notifytxt = new Text(getTime());
+        notifytxt = new Text(timetxt);
     }
 
     @Override
