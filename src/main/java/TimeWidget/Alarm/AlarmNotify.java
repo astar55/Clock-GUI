@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -20,13 +21,13 @@ public class AlarmNotify extends TimeWidgetNotify{
     private LocalTime current;
     private ScheduledThreadPoolExecutor executor;
     private ScheduledFuture<?> scheduledFuture;
-    private String timetxt;
+    private String timeformat;
 
-    public AlarmNotify(Stage owner, String name, LocalTime time, String timetxt, String mediasrc, long snoozetime) {
+    public AlarmNotify(Stage owner, String name, LocalTime time, String timeformat, String mediasrc, long snoozetime) {
         super(owner, name, time.toString(), mediasrc);
         this.snoozetime = snoozetime;
         this.current = time;
-        this.timetxt = timetxt;
+        this.timeformat = timeformat;
         executor = new ScheduledThreadPoolExecutor(1);
         createNotify(owner);
     }
@@ -40,7 +41,7 @@ public class AlarmNotify extends TimeWidgetNotify{
 
     @Override
     public void setNotifyText() {
-        notifytxt = new Text(timetxt);
+        notifytxt = new Text(formatTime(current));
     }
 
     @Override
@@ -83,8 +84,21 @@ public class AlarmNotify extends TimeWidgetNotify{
     private void snoozefun() {
         stage.show();
         mediaPlayer.play();
+        if(playpausepane.getChildren().contains(playbutton)){
+            playpausepane.setCenter(pausebutton);
+        }
         setCurrent(current.plusSeconds(snoozetime/1000));
-        notifytxt.setText(getCurrent().toString());
+        notifytxt.setText(formatTime(current));
+    }
+
+    private String formatTime(LocalTime time){
+        String timetxt;
+        if (timeformat.equals("24")){
+            timetxt = time.toString();
+        }else {
+            timetxt = time.format(DateTimeFormatter.ofPattern("hh:mm a"));
+        }
+        return timetxt;
     }
 
     public LocalTime getCurrent() {

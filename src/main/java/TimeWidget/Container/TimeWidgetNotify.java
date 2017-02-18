@@ -51,6 +51,8 @@ public abstract class TimeWidgetNotify {
     protected boolean muted = false;
     protected Slider seekbar;
     protected GridPane gridPane;
+    protected BorderPane playpausepane;
+    protected ImageView playbutton,pausebutton;
 
     public TimeWidgetNotify(Stage owner, String name, String time, String mediasrc){
         this.name = name;
@@ -137,7 +139,7 @@ public abstract class TimeWidgetNotify {
                 }
             }));
 
-            BorderPane playpausepane = new BorderPane();
+            playpausepane = new BorderPane();
 
             ImageView playbutton = new ImageView(new Image(getClass().getResourceAsStream("/ic_play_arrow_black_18dp_1x.png")));
             ImageView pausebutton = new ImageView(new Image(getClass().getResourceAsStream("/ic_pause_black_18dp_1x.png")));

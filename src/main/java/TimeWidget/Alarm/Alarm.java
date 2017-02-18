@@ -94,7 +94,7 @@ public class Alarm extends TimeWidget {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        new AlarmNotify(owner, name, time, formatTime(time), mediasrc, snoozetime);
+                        new AlarmNotify(owner, name, time, timeformat, mediasrc, snoozetime);
                     }
                 });
                 if(futureTask.isDone()) {
