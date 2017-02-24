@@ -48,6 +48,9 @@ public class Alarm extends TimeWidget {
         RowConstraints rowConstraints = new RowConstraints();
         rowConstraints.setPercentHeight(33);
         widget.getRowConstraints().addAll(rowConstraints);
+        widget.setOnMouseClicked(event -> {
+            new AlarmUpdate(owner, alarmView, alarm);
+        });
 
         BorderPane borderPane = new BorderPane();
         timetxt = new Text(formatTime(this.time));
@@ -73,6 +76,18 @@ public class Alarm extends TimeWidget {
         });
 
         executeExecutor();
+    }
+
+    public void updateAlarm(String name, LocalTime time, String format, int snoozetime, String media) {
+        this.name = name;
+        this.time = time;
+        this.timeformat = format;
+        this.snoozetime = snoozetime;
+        this.mediasrc = media;
+        titletxt.setText(name);
+        timetxt.setText(formatTime(time));
+        futureTask.cancel(true);
+        futureTask = createFutureTask();
     }
 
     @Override
@@ -137,4 +152,19 @@ public class Alarm extends TimeWidget {
         alarmswitchPane.setCenter(snoozeswitch);
     }
 
+    public String getTimeformat() {
+        return this.timeformat;
+    }
+
+    public long getSnoozetime() {
+        return this.snoozetime;
+    }
+
+    public LocalTime getTime() {
+        return this.time;
+    }
+
+    public String getMediasrc() {
+        return this.mediasrc;
+    }
 }

@@ -27,12 +27,13 @@ public abstract class TimeWidget {
     protected Button startbtn;
     protected Button resumebtn;
     protected Button pausebtn;
+    protected Text titletxt;
 
     protected void createWidget() {
         widget = CreateFunctions.createColumnConstraintedGridPane(25);
         //widget.setGridLinesVisible(true);
 
-        Text titletxt = new Text(getName());
+        titletxt = new Text(getName());
         widget.add(titletxt, 0, 0, 3,1);
 
         Image closeimg = new Image(getClass().getResourceAsStream("/ic_clear_black_24dp_1x.png"));

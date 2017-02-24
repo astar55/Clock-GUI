@@ -14,6 +14,8 @@ public class StopwatchCreate extends TimeCreate{
     final private static String type = "Stopwatch";
     protected StopwatchView stopwatchView;
     protected CheckBox autostartchckbx;
+    protected TextField nametf;
+
 
     public StopwatchCreate(Stage owner, StopwatchView stopwatchView) {
         super(owner);
@@ -22,8 +24,8 @@ public class StopwatchCreate extends TimeCreate{
 
     @Override
     public void createCenter() {
-        TextField nametxtfield = new TextField(type);
-        gridPane.add(nametxtfield, 1,2,3,1);
+        nametf = new TextField(type);
+        gridPane.add(nametf, 1,2,3,1);
 
         HBox autostartlblbox = new HBox();
         autostartlblbox.setAlignment(Pos.CENTER);
@@ -44,7 +46,7 @@ public class StopwatchCreate extends TimeCreate{
     public void createActionButtons() {
         Button createbtn = new Button("Create");
         createbtn.setOnMouseClicked((event -> {
-            stopwatchView.createWidget(owner,type,autostartchckbx.isSelected());
+            stopwatchView.createWidget(owner,nametf.getText(),autostartchckbx.isSelected());
             stage.close();
         }));
         gridPane.add(createbtn, 0, 5);

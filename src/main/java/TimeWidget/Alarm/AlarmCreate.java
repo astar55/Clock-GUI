@@ -25,6 +25,7 @@ public class AlarmCreate extends TimeCreate{
     protected ComboBox<String> ampmcb;
     protected ComboBox<Integer> snoozecb;
     protected Text audiotxt;
+    protected TextField nametf;
 
     public AlarmCreate(Stage owner, AlarmView alarmView) {
         super(owner);
@@ -34,7 +35,7 @@ public class AlarmCreate extends TimeCreate{
     @Override
     public void createCenter() {
 
-        TextField nametf = new TextField(type);
+        nametf = new TextField(type);
         gridPane.add(nametf, 1, 2, 3 ,1);
 
         Label timeformatlbl = new Label("Time Format");
@@ -148,7 +149,7 @@ public class AlarmCreate extends TimeCreate{
                 time = ampmcb.getValue().equals("AM") ? LocalTime.of((hrcb.getValue() < 12 ? hrcb.getValue() : 0 ), mincb.getValue()) : LocalTime.of((hrcb.getValue() < 12 ? 12 + hrcb.getValue() : 12 ) , mincb.getValue());
                 timeformat = "12";
             }
-            alarmView.createWidget(owner, type, time, timeformat, snoozecb.getValue()*1000*60,audiotxt.getText());
+            alarmView.createWidget(owner, nametf.getText(), time, timeformat, snoozecb.getValue()*1000*60,audiotxt.getText());
 
         });
         gridPane.add(createbtn, 0, 7);

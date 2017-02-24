@@ -56,4 +56,10 @@ public abstract class TimeCreate {
         String title ="Create " + type;
         return title;
     }
+
+    public String updateTitle(String type) {
+        String title = "Update " + type;
+        return title;
+    }
+
 }

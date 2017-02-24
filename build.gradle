@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.+")
     }
 }
 
@@ -25,7 +25,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-jdbc")
-    compile("org.xerial:sqlite-jdbc")
+    //compile("org.springframework.boot:spring-boot-starter-jdbc")
+    //compile("org.xerial:sqlite-jdbc")
     testCompile("junit:junit")
 }

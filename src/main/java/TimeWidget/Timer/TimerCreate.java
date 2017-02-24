@@ -25,6 +25,8 @@ public class TimerCreate extends TimeCreate{
     protected Button createbtn;
     protected TimerView timerView;
     protected Text audiotxt;
+    protected TextField nametf;
+
 
     public TimerCreate(Stage owner, TimerView timerView) {
         super(owner);
@@ -35,8 +37,8 @@ public class TimerCreate extends TimeCreate{
     public void createCenter() {
 
 
-        TextField nametxtfield = new TextField(type);
-        gridPane.add(nametxtfield, 1,2,3,1);
+        nametf = new TextField(type);
+        gridPane.add(nametf, 1,2,3,1);
 
         HBox timelbl = createAlignedLabel("Time", Pos.CENTER);
         gridPane.add(timelbl, 0,3);
@@ -111,7 +113,7 @@ public class TimerCreate extends TimeCreate{
         createbtn.setOnMouseClicked(event -> {
             stage.close();
             Duration duration = Duration.ofHours(hourcb.getValue()).plusMinutes(mincb.getValue()).plusSeconds(seccb.getValue());
-            timerView.createWidget(owner, type, duration, audiotxt.getText());
+            timerView.createWidget(owner, nametf.getText(), duration, audiotxt.getText());
         });
         gridPane.add(createbtn, 0, 6);
 
