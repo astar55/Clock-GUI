@@ -69,7 +69,7 @@ public abstract class TimeWidgetNotify {
 
     public void createNotify(Stage owner) {
         gridPane = createColumnConstraintedGridPane(25);
-        gridPane.getStylesheets().add(getClass().getResource("/TimeWidget/style.css").toExternalForm());
+        gridPane.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         //gridPane.setGridLinesVisible(true);
 
         Text title = new Text(name);

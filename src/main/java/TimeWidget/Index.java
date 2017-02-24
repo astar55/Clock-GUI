@@ -20,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 
@@ -117,7 +118,7 @@ public class Index extends Application {
         ScrollPane scrollPane = createScrollPane(gridPane);
 
         Scene indexScene = new Scene(scrollPane, 600, 550);
-        indexScene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        indexScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
         primaryStage.setTitle("TimeWidget");
         primaryStage.setScene(indexScene);

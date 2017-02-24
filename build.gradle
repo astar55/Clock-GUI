@@ -25,6 +25,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    compile("org.springframework.boot:spring-boot-starter")
     //compile("org.springframework.boot:spring-boot-starter-jdbc")
     //compile("org.xerial:sqlite-jdbc")
     testCompile("junit:junit")
