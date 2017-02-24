@@ -48,13 +48,17 @@ public class Alarm extends TimeWidget {
         RowConstraints rowConstraints = new RowConstraints();
         rowConstraints.setPercentHeight(33);
         widget.getRowConstraints().addAll(rowConstraints);
-        widget.setOnMouseClicked(event -> {
+
+        titlepane.setOnMouseClicked(event -> {
             new AlarmUpdate(owner, alarmView, alarm);
         });
 
         BorderPane borderPane = new BorderPane();
         timetxt = new Text(formatTime(this.time));
         borderPane.setCenter(timetxt);
+        borderPane.setOnMouseClicked(event -> {
+            new AlarmUpdate(owner, alarmView, alarm);
+        });
         widget.add(borderPane, 0, 1, 3, 1);
 
 
